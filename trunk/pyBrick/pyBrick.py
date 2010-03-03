@@ -16,6 +16,7 @@ from pyglet.window import mouse
 from Ball import Ball
 from Brick import Brick
 from Player import Player
+from Walls import Walls
 
 #Setup Window
 window = pyglet.window.Window(640,480,caption="pyBrick",vsync = True)
@@ -37,6 +38,7 @@ hiscore = 0
 level = 0
 balls = []
 bricks = []
+myWalls = Walls()
 
 #Setup Text Labels for scoring etc
 playerLabel = pyglet.text.Label('Score', font_name='Arial', font_size=12, x=40, y=464, anchor_x='center', anchor_y='center',batch = batch)
@@ -47,12 +49,9 @@ lifeLabel = pyglet.text.Label('Lifes', font_name='Arial', font_size=12, x=320, y
 lifeScore = pyglet.text.Label('000', font_name='Arial', font_size=24, x=320, y=440, anchor_x='center', anchor_y='center',batch = batch)
 
 def newWall(level):
-    if level%3 == 0:
-        lines = ('##########','##########','##########','~#~#~#~#~#','#~#~#~#~#~','~#~#~#~#~#','#~#~#~#~#~')
-    elif level%3 == 1:
-        lines = ('##########','#~~~~~~~~#','#~######~#','#~#~~~~#~#','#~######~#','#~~~~~~~~#','##########')
-    else:
-        lines = ('~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~')    
+    global myWalls
+    mod = myWalls.length
+    lines = myWalls.walls[level%myWalls.length]
     wall = []
     loopY = 0
     for line in lines:
