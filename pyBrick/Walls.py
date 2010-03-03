@@ -1,12 +1,18 @@
 import pyglet
 
-class Wall():
+class Walls():
+    '''Define a set of walls for level'''
     walls = []
+    length = 0
 
     def __init__(self):
-        self.walls.append(('##########','##########','##########','~#~#~#~#~#','#~#~#~#~#~','~#~#~#~#~#','#~#~#~#~#~'))
-        self.walls.append(('##########','#~~~~~~~~#','#~######~#','#~#~~~~#~#','#~######~#','#~~~~~~~~#','##########'))
-        self.walls.append(('~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~'))
+        self.fileRead('defaultWalls.txt')
+        if len(self.walls) == 0:
+            '''Setup default walls if none read in'''
+            self.walls.append(('##########','# # # # # ','##########','~#~#~#~#~#','#~#~#~#~#~','~#~#~#~#~#','#~#~#~#~#~'))
+            self.walls.append(('##########','#~~~~~~~~#','#~######~#','#~#~~~~#~#','#~######~#','#~~~~~~~~#','##########'))
+            self.walls.append(('~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~'))
+        self.length = len(self.walls)
 
     def fileRead(self,filename):
         '''Read Walls from a file'''
@@ -16,11 +22,10 @@ class Wall():
             for line in myFile:
                 if line == '#Wall Start\n':
                     lines = []
-                    print "start"
                 elif line == '#Wall End\n':
-                    print "end"
+                    self.walls.append(lines)
                 else:
-                    lines.append(line)
+                    lines.append(line.strip())
         except IOError:
             print "Error reading from file "+filename
         finally:
