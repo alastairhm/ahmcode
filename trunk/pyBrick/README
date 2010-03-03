@@ -6,8 +6,3 @@ Requires Python 2.6 and Pyglet 1.1.4+
 
 Move the bat using the mouse, any keypress or mouse button will exit the game at the moment.
 
-TODO
-Improve the collision detection
-Hiscore Table
-Load walls from text file
-Improve game startup etc
