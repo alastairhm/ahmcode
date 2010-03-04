@@ -1,3 +1,11 @@
+# Brick class
+#
+# 
+#
+# Alastair Montgomery 2010
+# http://www.twitter.com/alastair_hm
+#
+
 import pyglet
 
 class Brick(pyglet.sprite.Sprite):
