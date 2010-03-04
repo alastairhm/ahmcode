@@ -2,7 +2,8 @@
 #
 #   Remake of the old Breakout/ Arkanoid game
 #
-#   Alastair Montgomery (c) 2010
+# Alastair Montgomery 2010
+# http://www.twitter.com/alastair_hm
 #
 
 import pdb
@@ -38,7 +39,7 @@ hiscore = 0
 level = 0
 balls = []
 bricks = []
-myWalls = Walls()
+myWalls = Walls('defaultWalls.txt')
 
 #Setup Text Labels for scoring etc
 playerLabel = pyglet.text.Label('Score', font_name='Arial', font_size=12, x=40, y=464, anchor_x='center', anchor_y='center',batch = batch)

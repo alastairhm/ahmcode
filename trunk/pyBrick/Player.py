@@ -1,3 +1,11 @@
+# Player class
+#
+# 
+#
+# Alastair Montgomery 2010
+# http://www.twitter.com/alastair_hm
+#
+
 import pyglet
 import random
 import math
