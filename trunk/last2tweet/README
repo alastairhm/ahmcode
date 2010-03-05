@@ -1,0 +1,13 @@
+Last 2 Twitter
+Alastair Montgomery 2010
+
+Posted latest artists you've listened to on Last.FM to your Twitter or FriendFeed account.
+Setup your account details in the 'last2twit.cfg' file.
+Then run it as a scheduled or cron task every so often.
+
+Requires
+    Python 2.6
+    FriendFeed API http://friendfeed.com/api/documentation
+    Twitter API http://code.google.com/p/python-twitter/
+    SimpleJSON http://cheeseshop.python.org/pypi/simplejson
+    FeedParser http://code.google.com/p/feedparser/
