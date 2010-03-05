@@ -6,7 +6,6 @@
 # http://www.twitter.com/alastair_hm
 #
 
-import pdb
 import pyglet
 import random
 import math
@@ -64,6 +63,17 @@ def newWall(level):
         loopY +=1    
     return wall
 
+def test():
+    global score, hiscore, lifes, balls, bricks, level,player
+
+    newBall()
+    bricks.append(Brick(320,200,'#',batch,foreground))
+    balls[0].x = 200
+    balls[0].y = 100
+    balls[0].dx = 100
+    balls[0].dy = 100
+
+
 def newGame():
     global score, hiscore, lifes, balls, bricks, level,player
     
@@ -80,15 +90,37 @@ def newBall():
     global balls, player
     balls.append(Ball(player.x+(player.width//2),window,batch,foreground))
     
-def bang(left,right,top,bottom,b,dt):
-    #Collision between bat (a)  and ball (b)
+def bang(a,b,dt):
+    '''Collision between sprite (a) and sprite (b)'''
+    left = a.x
+    right = a.x + a.width
+    top = a.y + a.height
+    bottom = a.y
+
     nextPY = b.y+(b.dy*dt)
     nextPX = b.x+(b.dx*dt)
-
-    if (nextPY <= top and nextPY >= bottom) and (nextPX <= right and nextPX >= left):
-        return True
+    nextPTY = nextPY + b.height
+    nextPTX = nextPX + b.width
+    
+    #print 'ball [%d,%d],[%d,%d] brick [%d,%d,%d,%d]' % (b.x,b.y,nextPX,nextPY,left,bottom,right,top)    
+    if ((nextPY <= top and nextPY >= bottom) and (nextPX <= right and nextPX >= left)) or ((nextPTY <= top and nextPTY >= bottom) and (nextPTX <= right and nextPTX >= left)):
+        #print 'ball [%d,%d],[%d,%d] brick [%d,%d,%d,%d]' % (b.x,b.y,nextPX,nextPY,left,bottom,right,top)
+        if b.y >= bottom and b.y <= top:
+            if b.x < left:
+                #print 'left hit'
+                return 1
+            elif b.x > right:
+                #print 'right hit'
+                return 2
+        else:
+            if b.y < bottom:
+                #print 'bottom hit'
+                return 3
+            elif b.y > top:
+                #print 'top hit'
+                return 4
     else:
-        return False
+        return 0
 
 def update(dt):
     global score, hiscore, bricks,balls,lifes,level
@@ -99,22 +131,25 @@ def update(dt):
     top = player.y + player.height
 
     for p2 in balls:
-        if bang(player.x,right,top,player.y,p2,dt):
+        result = bang(player,p2,dt)
+        if result > 0:
             #collision with bat and ball
-            p2.collision(dt,mid)
+            p2.collision(dt,mid,result,True)
         else:
             for b in bricks:
-                if bang(b.x,b.x+b.width,b.y+b.height,b.y,p2,dt):
+                result = bang(b,p2,dt)
+                if result > 0:
                     #collision with ball and brick
                     if b.collision():
                         b.delete()
                         bricks.remove(b)
                         if len(bricks) == 0:
                             level += 1
-                            bricks = newWall(level)
-                    p2.collision(dt,b.x+(b.width/2))
+                            #bricks = newWall(level)
+                    p2.collision(dt,b.x+(b.width/2),result,False)
                     score += 1
         if p2.update(dt) == False:
+            # Ball missed
             lifes -= 1
             if lifes < 0:
                 for b in balls:
@@ -133,8 +168,8 @@ def on_key_press(symbol,modifiers):
 
 @window.event
 def on_mouse_press(x1, y1, button, modifiers):
-    mgr = pyglet.image.get_buffer_manager()
-    mgr.get_color_buffer().save("screen.png")
+    #mgr = pyglet.image.get_buffer_manager()
+    #mgr.get_color_buffer().save("screen.png")
     window.close()
 
 @window.event
@@ -151,6 +186,7 @@ def on_draw():
 
 def main():
     newGame()
+    #test()
     pyglet.clock.schedule_interval(update, 1.0/60.0)
     #window.push_handlers(pyglet.window.event.WindowEventLogger())
     pyglet.app.run()

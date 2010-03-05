@@ -21,7 +21,7 @@ class Ball(pyglet.sprite.Sprite):
         #x = random.random() * (window.width-self.width)
         y = 40
         super(Ball, self).__init__(self.image,x,y,batch = batch, group=group)
-        self.dx = (random.random() - 0.5) * 500
+        self.dx = (random.random() - 0.5) * 240
         #self.dy = (random.random() * 250) + 250
         self.dy = 240
         self.anchor_x = self.width /2
@@ -38,7 +38,7 @@ class Ball(pyglet.sprite.Sprite):
         #Ball leaves bottom of screen
         if self.y <= 0:
             self.y = self.max_y - self.height
-            self.dx = (random.random() - 0.5) * 500
+            self.dx = (random.random() - 0.5) * 240
             flag = False
         else:
             #Right wall hit
@@ -56,13 +56,22 @@ class Ball(pyglet.sprite.Sprite):
         self.y = min(max(self.y,0),self.max_y)
         return flag
         
-    def collision(self,dt,mid):
+    def collision(self,dt,mid,hitType,batHit):
         self.bounce.play()
-        #Change speed if hit with edge of bat
-        if self.x < mid-10:
-            self.dx = self.dx - 100
-        elif self.x > mid+10:
-            self.dx = self.dx + 100
-        #Bounce ball    
-        self.dy *= -1
-        self.y += dt * self.dy
+        #Bounce ball
+        if hitType>2:
+            # Top or bottom hit
+            self.dy *= -1
+            self.y += dt * self.dy
+            if batHit:
+                #Change speed if hit with left or right end of bat
+                if self.x < mid-10:
+                    self.dx = self.dx - 80
+                elif self.x > mid+10:
+                    self.dx = self.dx + 80            
+        else:
+            # Left or right hit
+            self.dx *= -1
+            self.x += dt * self.dx
+
+            
