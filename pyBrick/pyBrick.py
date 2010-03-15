@@ -7,11 +7,9 @@
 #
 
 import pyglet
-import random
-import math
 
-from pyglet.window import key
-from pyglet.window import mouse
+#from pyglet.window import key
+#from pyglet.window import mouse
 
 from Ball import Ball
 from Brick import Brick
@@ -38,7 +36,7 @@ hiscore = 0
 level = 0
 balls = []
 bricks = []
-myWalls = Walls('defaultWalls.txt')
+myWalls = Walls('data/defaultWalls.txt')
 
 #Setup Text Labels for scoring etc
 playerLabel = pyglet.text.Label('Score', font_name='Arial', font_size=12, x=40, y=464, anchor_x='center', anchor_y='center',batch = batch)
@@ -50,7 +48,7 @@ lifeScore = pyglet.text.Label('000', font_name='Arial', font_size=24, x=320, y=4
 
 def newWall(level):
     global myWalls
-    mod = myWalls.length
+
     lines = myWalls.walls[level%myWalls.length]
     wall = []
     loopY = 0
@@ -83,7 +81,7 @@ def newGame():
         hiscore = score
     score = 0
     level = 0
-    lifes = 2        
+    lifes = 2
     bricks = newWall(level)
 
 def newBall():
@@ -127,8 +125,6 @@ def update(dt):
 
     player.update(dt)
     mid = player.x + (player.width/2)
-    right = player.x + player.width
-    top = player.y + player.height
 
     for p2 in balls:
         result = bang(player,p2,dt)

@@ -8,7 +8,6 @@
 
 import pyglet
 import random
-import math
 
 class Ball(pyglet.sprite.Sprite):
     image = pyglet.resource.image('graphics/ball12.png')
@@ -49,7 +48,7 @@ class Ball(pyglet.sprite.Sprite):
             if self.y >= self.max_y:
                 self.dy *= -1
                 self.bounce.play()
-        #Set new ball positon
+        #Set new ball position
         self.x += dt * self.dx
         self.y += dt * self.dy
         self.x = min(max(self.x,0),self.max_x)
@@ -74,4 +73,4 @@ class Ball(pyglet.sprite.Sprite):
             self.dx *= -1
             self.x += dt * self.dx
 
-            
+
