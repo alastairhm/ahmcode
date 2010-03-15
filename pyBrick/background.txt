@@ -1,2 +1,0 @@
-graphics/background.jpg
-graphics/background2.jpg
