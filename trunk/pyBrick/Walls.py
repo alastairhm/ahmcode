@@ -51,4 +51,4 @@ class Walls():
             print "Error writing to file "+filename
             
 if __name__ == "__main__":
-    w = Wall()
+    w = Walls()

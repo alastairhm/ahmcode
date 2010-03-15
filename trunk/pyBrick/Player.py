@@ -7,8 +7,7 @@
 #
 
 import pyglet
-import random
-import math
+
 
 class Player(pyglet.sprite.Sprite):
     image = pyglet.resource.image('graphics/player.png')
