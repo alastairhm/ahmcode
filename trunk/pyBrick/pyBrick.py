@@ -15,6 +15,7 @@ from Ball import Ball
 from Brick import Brick
 from Player import Player
 from Walls import Walls
+from Wallpaper import Wallpaper
 
 #Setup Window
 window = pyglet.window.Window(640,480,caption="pyBrick",vsync = True)
@@ -25,8 +26,7 @@ window.set_location(window.screen.width/2 - window.width/2,window.screen.height/
 batch = pyglet.graphics.Batch()
 background = pyglet.graphics.OrderedGroup(0)
 foreground = pyglet.graphics.OrderedGroup(1)
-wallpaper = pyglet.resource.image('graphics/background.jpg')
-wpSprite = pyglet.sprite.Sprite(wallpaper,batch=batch,group=background)
+wallpaper = Wallpaper('data/background.txt',batch,background)
 
 #Initialise Player etc
 player = Player(window,batch,foreground)
@@ -47,6 +47,7 @@ lifeLabel = pyglet.text.Label('Lifes', font_name='Arial', font_size=12, x=320, y
 lifeScore = pyglet.text.Label('000', font_name='Arial', font_size=24, x=320, y=440, anchor_x='center', anchor_y='center',batch = batch)
 
 def newWall(level):
+    '''Create wall of bricks'''
     global myWalls
 
     lines = myWalls.walls[level%myWalls.length]
@@ -75,8 +76,7 @@ def test():
 def newGame():
     global score, hiscore, lifes, balls, bricks, level,player
     
-    for a in range(0,1):
-        newBall()
+    newBall()
     if score > hiscore:
         hiscore = score
     score = 0
@@ -123,7 +123,7 @@ def bang(a,b,dt):
 def update(dt):
     global score, hiscore, bricks,balls,lifes,level
 
-    player.update(dt)
+    #player.update(dt)
     mid = player.x + (player.width/2)
 
     for p2 in balls:
@@ -141,7 +141,8 @@ def update(dt):
                         bricks.remove(b)
                         if len(bricks) == 0:
                             level += 1
-                            #bricks = newWall(level)
+                            bricks = newWall(level)
+                            wallpaper.update()
                     p2.collision(dt,b.x+(b.width/2),result,False)
                     score += 1
         if p2.update(dt) == False:
@@ -175,8 +176,8 @@ def on_mouse_motion(x,y,dx,dy):
 @window.event
 def on_draw():
     window.clear()
-    playerScore.text = "%3d" % score
-    hiScore.text = "%3d" % hiscore
+    playerScore.text = "%d" % score
+    hiScore.text = "%d" % hiscore
     lifeScore.text = "%d" % lifes
     batch.draw()
 
