@@ -1,7 +1,12 @@
 TODO
+
 Improve the collision detection more
 Hiscore Table
 Improve game loop
 Cycle backdrops (in progress)
 Special bonus tokens
-Multi hit brick sprites (in progress)
+Extra Lives
+
+DONE
+
+Multi hit brick sprites, changes alpha on sprite for multi-hit bricks
