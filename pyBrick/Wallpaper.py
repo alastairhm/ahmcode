@@ -16,8 +16,8 @@ class Wallpaper(pyglet.sprite.Sprite):
 
     def __init__(self,filename,batch,group):
         self.paper = self.fileRead(filename)
-        total = len(self.paper)
-        if total > 0:
+        self.total = len(self.paper)
+        if self.total > 0:
             wallImage = pyglet.resource.image(self.paper[self.count])
         else:
             wallImage = pyglet.resource.image('graphics/background.jpg')
@@ -38,4 +38,4 @@ class Wallpaper(pyglet.sprite.Sprite):
         self.count = (self.count + 1) % self.total
         wallImage = pyglet.resource.image(self.paper[self.count])
         self.image = wallImage
-        return 0
+

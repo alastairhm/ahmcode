@@ -45,5 +45,5 @@ class Brick(pyglet.sprite.Sprite):
         if self.hit == 0:
             return True
         else:
-            self.opacity = self.opacity // 2
+            self.opacity = self.opacity -64
             return False

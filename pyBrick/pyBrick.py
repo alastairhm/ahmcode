@@ -20,6 +20,7 @@ from Wallpaper import Wallpaper
 #Setup Window
 window = pyglet.window.Window(640,480,caption="pyBrick",vsync = True)
 window.set_location(window.screen.width/2 - window.width/2,window.screen.height/2 - window.height/2)
+window.set_exclusive_mouse()
 
 
 #create a sprite batch, graphics order, etc
@@ -56,7 +57,7 @@ def newWall(level):
     for line in lines:
         loopX = 0
         for a in line:
-            if a != ' ':
+            if a != '.':
                 wall.append(Brick(loopX*64,200+(loopY*32),a,batch,foreground))
             loopX += 1
         loopY +=1    
@@ -171,7 +172,7 @@ def on_mouse_press(x1, y1, button, modifiers):
 
 @window.event
 def on_mouse_motion(x,y,dx,dy):
-    player.x = x
+    player.x += dx
 
 @window.event
 def on_draw():

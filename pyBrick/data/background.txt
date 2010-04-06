@@ -1,2 +1,3 @@
 graphics/background.jpg
 graphics/background2.jpg
+graphics/background3.jpg

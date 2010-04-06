@@ -15,7 +15,7 @@ class Walls():
         self.fileRead(filename)
         if len(self.walls) == 0:
             '''Setup default walls if none read in'''
-            self.walls.append(('##########','# # # # # ','##########','~#~#~#~#~#','#~#~#~#~#~','~#~#~#~#~#','#~#~#~#~#~'))
+            self.walls.append(('##########','#.#.#.#.#.','##########','~#~#~#~#~#','#~#~#~#~#~','~#~#~#~#~#','#~#~#~#~#~'))
             self.walls.append(('##########','#~~~~~~~~#','#~######~#','#~#~~~~#~#','#~######~#','#~~~~~~~~#','##########'))
             self.walls.append(('~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~','~~~~~~~~~~','##########','~~~~~~~~~~'))
             self.fileWrite(filename)
@@ -30,7 +30,7 @@ class Walls():
                 if line == '#Wall Start\n':
                     lines = []
                 elif line == '#Wall End\n':
-                    self.walls.append(lines[:7])
+                    self.walls.append(lines[:8])
                 else:
                     lines.append(line.strip())
             myFile.close()
